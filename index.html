@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+
+<title>Home</title>
+
+<link rel="stylesheet" href="style.css">
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        
+    }
+</style>
+</head>
+
+<body>
+    <div id="whole-page">
+        <div class="navigation">
+            <button id="button-home"><ion-icon name="home-outline" class="icons"></ion-icon><br>Home</button>
+            <button id="button-canteen"><ion-icon name="restaurant-outline" class="icons"></ion-icon><br>Canteens</button>
+            <button id="button-drinks"><ion-icon name="cafe-outline" class="icons"></ion-icon><br>Drinks</button>
+            <button id="button-print-shops"><ion-icon name="print-outline" class="icons"></ion-icon class="icons"><br>Printing Services</button>
+            <button id="button-school-supplies"><ion-icon name="storefront-outline"class="icons"></ion-icon><br>School Supplies</button>
+            <button id="button-contacts"><ion-icon name="call-outline" class="icons"></ion-icon><br>Contacts</button>
+        </div>
+        <div id="screen"></div>
+    <div>
+
+    <!-- Home Information. Ito lalabas kapag pinindot ang "Home" sa navigation -->
+    <div id="home-info" class="map-content"> 
+        <img src="https://media.licdn.com/dms/image/C4E12AQFGMdC6yuRoAQ/article-cover_image-shrink_600_2000/0/1584560230812?e=2147483647&v=beta&t=2UquCPkAGhk1uBZx9zlyq9YxmGIue0fY9rimKWMTiho" id="home-map-background" >
+        <h1 id="home-title">Campus Compass</h1>
+        <p id="home-description">
+            Welcome to Campus Compass, your ultimate guide to navigating student-friendly businesses near our campus, 
+            fostering community by supporting local ventures that cater to your needs, from cozy coffee shops to 
+            convenient printing services and delicious meals at nearby canteens, enriching your student experience.
+        </p>
+        <img src="logo-cc.png" id="logo-cc">
+    </div>
+
+    <div id="canteen-content" class="map-content">
+        <!-- If maglalagay ng map, pakilagyan ng class="maps"-->
+        <iframe src="mapcanteens.html" id="map-canteen" class="maps" frameborder="0"></iframe>
+    </div>
+    
+    <div id="drinks-content" class="map-content">
+        <!-- If maglalagay ng map, pakilagyan ng class="maps" -->
+        <iframe src="mapdrinks.html" id="map-canteen" class="maps" frameborder="0"></iframe>
+    </div>
+    
+    <div id="print-shop-content" class="map-content">
+        <!-- If maglalagay ng map, pakilagyan ng class="maps"-->
+        <iframe src="mapprintshop.html" id="map-canteen" class="maps" frameborder="0"></iframe>
+    </div>
+    
+    <div id="school-supplies-content" class="map-content">
+        <!-- If maglalagay ng map, pakilagyan ng class="maps"-->
+        <iframe src="mapschoolsupllies.html" id="map-canteen" class="maps" frameborder="0"></iframe>
+    </div>
+
+    <div id="contacts-content" class="map-content">
+        <!-- If you want to embed your contacts.html file, use an iframe -->
+        <iframe src="contacts.html" id="map-canteen" class="maps" frameborder="0"></iframe>
+    </div>
+    
+
+    <!---script for icons-->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        // DETAILS X in box
+        // Delete ko maya
+        // Get all elements with class "x-button"
+        const closeButtonElements = document.querySelectorAll('.x-button');
+    
+        // Loop through each close button element
+        closeButtonElements.forEach(function(closeButton) {
+        // Add click event listener to each close button
+        closeButton.addEventListener('click', function() {
+        // Find the closest parent element with class "detail-box"
+        const detailBox = this.closest('.detail-box');
+        // Check if the detailBox exists
+        if (detailBox) {
+            // Hide the detail-box by setting its display property to "none"
+            detailBox.style.display = 'none';
+        }
+        });
+        });
+    
+
+    // Function to toggle visibility of map containers
+    function toggleMap(mapId) {
+        // Hide all map containers
+        const mapContainers = document.querySelectorAll('.map-content');
+        mapContainers.forEach(container => {
+            container.style.display = 'none';
+        });
+
+        // Show the selected map container
+        document.getElementById(mapId).style.display = 'flex';
+    }
+
+    // Show home-info by default
+    toggleMap('home-info');
+
+    // Add event listeners to each button
+    document.getElementById('button-home').addEventListener('click', function() {
+        // Show home-info
+        toggleMap('home-info');
+    });
+
+    document.getElementById('button-canteen').addEventListener('click', function() {
+        // Show map-canteen
+        toggleMap('canteen-content');
+    });
+
+    document.getElementById('button-drinks').addEventListener('click', function() {
+        // Show map-drinks
+        toggleMap('drinks-content');
+    });
+
+    document.getElementById('button-print-shops').addEventListener('click', function() {
+        // Show map-print-shop
+        toggleMap('print-shop-content');
+    });
+
+    document.getElementById('button-school-supplies').addEventListener('click', function() {
+        // Show map-school-supplies
+        toggleMap('school-supplies-content');
+    });
+
+    document.getElementById('button-contacts').addEventListener('click', function() {
+        // Show contacts-content
+        toggleMap('contacts-content');
+    });
+    </script>
+</body>
+</html>

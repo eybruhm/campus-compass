@@ -1,0 +1,251 @@
+/* home.html home.html home.html home.html home.html home.html home.html home.html home.html home.html */
+/*  GRANDPARENT DIV. Ito yung buong page. Sakop nito yung navigation sa kaliwa at screen/container sa kanan*/
+#whole-page {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 99%;
+}
+.navigation {
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    left: 0;
+}
+
+/* inulit ko yung button para akma dun sa pinapagawa mo boss mora*/
+.navigation button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: cursive;
+    font-size: medium;
+    padding: 10%;  
+    width: 100%;
+}
+#button-home, #button-canteen, #button-drinks, #button-print-shops, #button-school-supplies{
+    height: 16.7%;
+}
+#button-contacts{
+    height: 16.5%;
+}
+.navigation button:hover{
+    background-color: #ffcc6c;
+    color: white;
+}
+.icons{
+    font-size: 2em;
+}
+
+
+
+/* Ito yung container sa kanan. Dito lalabas yung mga maps ng kada-category*/
+#screen {
+    position: absolute;  
+    width: 90%; 
+    height: 100%;
+    margin-left: 10%;
+    background: linear-gradient(126deg,#0000ff,#ffffff,#ff0000);
+    background-size: 180% 180%;
+    animation: gradient-animation 10s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/*  Ito yung lumalabas sa "Screen". Dito nakalagay ang maps at detail box.*/
+.map-content {
+    position: absolute;
+    width: 91%;
+    height: 99.7%;
+    margin-left: 10%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*  Ito yung mismong mapa.*/
+.maps {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    right: 0;
+}
+
+
+
+/*  HOME PAGE. Ito yung "welcome! */
+#home-info {
+    position: absolute;
+    width: 91%;
+    height: 100%;
+    margin-left: 10%;
+    display: block;
+    align-items: normal;
+   /* border: 1px solid black;*/
+    text-align: left;
+    justify-content: left;
+    overflow: hidden;
+    background: linear-gradient(126deg,#0000ff,#ffffff,#ff0000);
+    background-size: 180% 180%;
+    animation: gradient-animation 10s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#home-map-background {
+    opacity: 0.1;
+    width: 100%;
+    height: 99.9%;
+}
+#home-title {
+    position: absolute;
+    margin: 10% 8%;
+    font-family: 'League Spartan', sans-serif;
+    font-size: 400%;
+}
+#home-description {
+    position: absolute;
+    margin: 16% 9%;
+    text-align: justify;
+    font-family: 'League Spartan', sans-serif;
+    line-height: 120%;
+    font-size: 150%;
+}
+#logo-cc {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    bottom: 5%;
+    right: 5%;
+}
+
+
+
+/* map.html map.html map.html map.html map.html map.html map.html map.html */
+
+#map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+}
+
+/*  DETAILS BOX. Kapag pinindot ang icon/pin sa map, ito lalabas*/
+/* Main Container. Ito yung buong box na lumalabas kapag pinindot mo yung icon sa maps. */
+#detail-box {
+    position: absolute;
+    border-radius: 2%;
+    width: 65%;
+    height: 75%;
+    top: 10%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+    overflow: hidden;
+    box-shadow: 5px 5px 40px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Container ng Image. Kung saan ilalagay ang image at ito yung magcrop sa image*/
+/* Nasa kaliwa ng Main container*/
+#detail-box-img {
+    position: absolute;
+    width: 45%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Attributes ng Image ng tindahan. */
+#store-img {
+    position: absolute;
+    height: 100%;
+    width: auto;
+    left: 0%;
+    opacity: 0.8;
+    
+}
+
+/* Container ng texts. Dito nakapaloob ang x-button, name, at sub-contaainer na may address, time, price, at feature */
+/* Nasa kanan ng Main Container */
+.detail-text-box {
+    position: absolute;
+    width: 55%;
+    height: 100%;
+    right: 0%;
+    border: 1px solid black;
+}
+#x-button {
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 120%;
+    color: black;
+    font-weight: bold;
+    background: none;
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-top: none;
+    border-right: none;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 5px;
+}
+#x-button:hover {
+    color: #ffcc6c;
+    border-bottom: 2px solid #ffcc6c;
+    border-left: 2px solid #ffcc6c;
+}
+
+#detail-name {
+    position: absolute;
+    margin: 5% 7%;
+    font-size: 240%;
+    font-family: 'Secular One', sans-serif;
+    color: black;
+/* border: 1px solid black;*/
+}
+
+/* Sub-container. Dito nakapaloob ang address, time, price, at feature */
+#detail-text-box-sub {
+    position: absolute;
+    /*border: 1px solid rgb(224, 105, 125);*/
+    width: 80%;
+    margin: 50% 15%;
+    margin-top: 20%;
+    list-style: none;
+    line-height: 90%;
+    font-weight: bold;
+    font-size: 170%;
+    font-family: 'Varela Round', sans-serif;
+}
+
+/* label */
+#detail-address, #detail-time, #detail-price, #detail-feature {
+    font-weight: normal;
+    font-size: 90%;
+}

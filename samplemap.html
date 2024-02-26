@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+    <title>Sample Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #map {
+            position: absolute;
+            width: 700px;
+            height: 600px;
+            left: 25%;
+            top: 5%;
+        }
+
+        /*  DETAILS BOX. Kapag pinindot ang icon/pin sa map, ito lalabas*/
+        /* Main Container. Ito yung buong box na lumalabas kapag pinindot mo yung icon sa maps. */
+        #detail-box {
+            position: absolute;
+            border-radius: 2%;
+            width: 65%;
+            height: 75%;
+            top: 10%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: block;
+            overflow: hidden;
+            box-shadow: 5px 5px 40px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Container ng Image. Kung saan ilalagay ang image at ito yung magcrop sa image*/
+        /* Nasa kaliwa ng Main container*/
+        #detail-box-img {
+            position: absolute;
+            width: 45%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Attributes ng Image ng tindahan. */
+        #store-img {
+            position: absolute;
+            height: 100%;
+            width: auto;
+            left: -60%;
+            opacity: 0.8;
+        }
+
+        /* Container ng texts. Dito nakapaloob ang x-button, name, at sub-contaainer na may address, time, price, at feature */
+        /* Nasa kanan ng Main Container */
+        .detail-text-box {
+            position: absolute;
+            width: 55%;
+            height: 100%;
+            right: 0%;
+        }
+        #x-button {
+            position: absolute;
+            right: 1%;
+            top: 1%;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 120%;
+            color: black;
+            font-weight: bold;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        #x-button:hover {
+            color: yellow;
+        }
+
+        #detail-name {
+            position: absolute;
+            margin: 5% 7%;
+            font-size: 240%;
+            font-family: 'Secular One', sans-serif;
+            color: black;
+        /* border: 1px solid black;*/
+        }
+
+        /* Sub-container. Dito nakapaloob ang address, time, price, at feature */
+        #detail-text-box-sub {
+            position: absolute;
+            /*border: 1px solid rgb(224, 105, 125);*/
+            width: 80%;
+            margin: 50% 15%;
+            margin-top: 20%;
+            list-style: none;
+            line-height: 90%;
+            font-weight: bold;
+            font-size: 170%;
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        /* label */
+        #detail-address, #detail-time, #detail-price, #detail-feature {
+            font-weight: normal;
+            font-size: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+   
+    <div id="detail-box"> 
+        <div id="detail-box-img">
+            <img src="https://png.pngtree.com/thumb_back/fh260/background/20230424/pngtree-traditional-japanese-shop-in-the-middle-of-the-street-image_2511202.jpg" id="store-img">
+        </div>
+        <div class="detail-text-box">
+            <button id="x-button">X</button>
+            <span id="detail-name">Store's Name</span>
+            <div id="detail-text-box-sub">
+                <li id="label-address">Address: <span id="detail-address">Store's Address</span></li>
+                <br>
+                <li id="label-time">Store Hours: <span id="detail-time">Store's Time</span></li>
+                <br>
+                <li id="label-price">Price Range: <span id="detail-price">Store's Price</span></li>
+                <br>
+                <li id="label-feature">Shop Features: <span id="detail-feature">Store's Feature</span></li>
+            </div>
+        </div>
+    </div>
+
+  
+<script>
+    var map;
+    var InfoObj = [];
+    var centerCords = {
+        lat: 14.701084336184477,
+        lng: 121.03493936692358,
+    };
+
+    const icons = {
+        schoolsupplies: {             // type
+        icon: "icon-schoolsupplies.png"    // icon sa mapa
+        }
+    };
+  
+     
+    var markersOnMap = [
+        // Basta violet yung bracket kung magdadagdag
+        {
+            schoolsuppliesName: 'Rowena Store',                                  
+            schoolsuppliesAddress: '688 San Bartolome Quirino Highwayy, Bonifacio market, Rockville subdivision. Quezon City', 
+            schoolsuppliesTime: '7am - 7pm',
+            schoolsuppliesPrice: 'N/A',
+            schoolsuppliesFeature: 'N/A',
+            schoolsuppliesImage: 'img-schoolsupplies1.jpg',
+            LatLng: [{
+                lat: 14.701079137641194, 
+                lng: 121.03539081710281
+            }],
+            type: 'schoolsupplies' 
+        },
+        {
+            schoolsuppliesName: 'School zone – Merchandise',
+            schoolsuppliesAddress: 'PMB Building, 315 Pablo Dela Cruz, Novaliches, Quezon City, 1116 Metro Manila',
+            schoolsuppliesTime: '8am - 8pm Monday to Sunday',
+            schoolsuppliesPrice: 'N/A',
+            schoolsuppliesFeature: 'N/A',
+            schoolsuppliesImage: 'img-schoolsupplies2.jpg',
+            LatLng: [{
+                lat: 14.70162053446445, 
+                lng: 121.0348805024805
+            }],
+            type: 'schoolsupplies'
+        },
+    ];
+
+    window.onload = function() {
+        initMap();
+    };
+
+    function addMarkerInfo() {
+        for (let i = 0; i < markersOnMap.length; i++) {
+            const schoolsupplies = markersOnMap[i];    //yung schoolsupplies
+
+            const marker = new google.maps.Marker({
+                position: schoolsupplies.LatLng[0],        //yung schoolsupplies
+                icon: icons[schoolsupplies.type].icon,     //yung schoolsupplies
+                map: map
+            });
+
+            // Create a closure to maintain the correct value of 'i'
+            marker.addListener("click", (function(schoolsupplies) { //ito
+                return function() {
+                    document.getElementById('detail-name').textContent = schoolsupplies.schoolsuppliesName;
+                    document.getElementById('detail-address').textContent = schoolsupplies.schoolsuppliesAddress;
+                    document.getElementById('detail-time').textContent = schoolsupplies.schoolsuppliesTime;
+                    document.getElementById('detail-price').textContent = schoolsupplies.schoolsuppliesPrice;
+                    document.getElementById('detail-feature').textContent = schoolsupplies.schoolsuppliesFeature;
+                    document.getElementById('store-img').src = schoolsupplies.schoolsuppliesImage; // Set the image src
+                    document.getElementById('detail-box').style.display = "block";
+                };
+            })(schoolsupplies));   //ito
+        }
+    }
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 18,
+            center: centerCords
+        });
+        addMarkerInfo();
+    };
+
+
+    // Get the close button element by its ID
+    const closeButton = document.getElementById('x-button');
+    
+    // Add click event listener to the close button
+    closeButton.addEventListener('click', function() {
+        // Find the closest parent element with ID "detail-box"
+        const detailBox = this.closest('#detail-box');
+        // Check if the detailBox exists
+        if (detailBox) {
+            // Hide the detail-box by setting its display property to "none"
+            detailBox.style.display = 'none';
+        }
+    });
+
+
+</script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXhvFLQkvbE62WCdNsgXEB6rPSPnvKIAU&callback=initMap&v=weekly">
+</script>
+</body>
+</html>
