@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Abram</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+  <style>
+        #map {
+            position: absolute;
+            width: 700px;
+            height: 600px;
+            left: 25%;
+            top: 5%;
+        }
+
+        #details-box {
+            position: absolute;
+            top: 20%;
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            display: none; 
+        } 
+        #shop-image {
+        /*  position: absolute; */ /* pre kinomment ko muna to para nasa ibaba yung image ikaw na lang bahala mag style o kaya ako if gusto mo*/
+          width: 80%;
+          height: 80%;
+        }
+    </style> 
+</head>
+<body>
+    <div id="map"></div>
+
+   
+    <div id="details-box">
+        <h1 id="name">fasf</h1>
+        <h3>Address: </h3> <span id="address">fasf</span>
+        <h3>Time: </h3> <span id="time">fasf</span>
+        <h3>Price range: </h3> <span id="price-range">fasf</span>
+        <h3>Best feature: </h3> <span id="best-seller">fasf</span>
+        <img src="sample.png" id="shop-image">
+    </div>
+
+  
+<script>
+    var map;
+    var InfoObj = [];
+    var centerCords = {
+        lat: 14.699951807599065,
+        lng: 121.03430951813161,
+    };
+
+    const icons = {
+        drink: {             // type
+        icon: "icon-drink.png"    // icon sa mapa
+        }
+    };
+
+     
+    var markersOnMap = [
+        // Basta violet yung bracket kung magdadagdag
+        {
+            drinkName: "Urban O Kitchenette",
+            drinkAddress: '11 Urbano St., Brgy. Bagbag, Novaliches, Quezon City',
+            drinkTime: '10:00 AM - 8:00 PM',
+            drinkPrice: 'lorem ipsum',
+            drinkBestSeller: 'lorem ipsum',
+            drinkImage: 'img-drink1.jpg',
+            LatLng: [{
+                lat: 14.699039,
+                lng: 121.032597
+            }],
+            type: 'drink'
+        },
+        {
+            drinkName: "Coffee Vending Machine",
+            drinkAddress: 'Sinforosa St. Quirino Highway, Brgy. Bagbag, Novaliches, Quezon City',
+            drinkTime: 'lorem ipsum',
+            drinkPrice: '5',
+            drinkBestSeller: 'lorem ipsum',
+            drinkImage: 'img-drink2.jpg',
+            LatLng: [{
+                lat: 14.699593,
+                lng: 121.033732
+            }],
+            type: 'drink'
+        },
+        {
+            drinkName: "Canta's Favorites",
+            drinkAddress: '2F, Nova Square, Quirino Highway, Novaliches, Quezon City, Metro Manila',
+            drinkTime: 'Monday - Friday(6AM - 10PM) Free wifi access',
+            drinkPrice: 'lorem ipsum',
+            drinkBestSeller: 'Milkshake(Matcha and Strawberry) Coffee(Spanish)',
+            drinkImage: 'img-drink3.jpg',
+            LatLng: [{
+                lat: 14.701536556212444,
+                lng: 121.03520831112868
+            }],
+            type: 'drink'
+        },
+        {
+            drinkName: "Lori's Taste Café",
+            drinkAddress: 'Nova Square, Quirino Highway, Novaliches, Quezon City',
+            drinkTime: 'Monday - Sunday(8AM - 11PM)',
+            drinkPrice: 'lorem ipsum',
+            drinkBestSeller: 'Coffee and Milk Tea, Food and Meals',
+            drinkImage: 'img-drink4.jpg',
+            LatLng: [{
+                lat: 14.70155471698355,
+                lng: 121.03518014793589
+            }],
+            type: 'drink'
+        },
+    ];
+
+    window.onload = function() {
+        initMap();
+    };
+
+    function addMarkerInfo() {
+        for (let i = 0; i < markersOnMap.length; i++) {
+            const drink= markersOnMap[i];    //yung canteen
+
+            const marker = new google.maps.Marker({
+                position: drink.LatLng[0],        //yung canteen
+                icon: icons[drink.type].icon,     //yung canteen
+                map: map
+            });
+
+            // Create a closure to maintain the correct value of 'i'
+            marker.addListener("click", (function(drink) { //ito
+                return function() {
+                    document.getElementById('name').textContent = drink.drinkName;
+                    document.getElementById('address').textContent = drink.drinkAddress;
+                    document.getElementById('time').textContent = drink.drinkTime;
+                    document.getElementById('price-range').textContent = drink.drinkPrice;
+                    document.getElementById('best-seller').textContent = drink.drinkBestSeller;
+                    document.getElementById('shop-image').src = drink.drinkImage; // Set the image src
+                    document.getElementById('details-box').style.display = "block";
+                };
+            })(drink));   //ito
+        }
+    }
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 18,
+            center: centerCords
+        });
+        addMarkerInfo();
+    };
+
+</script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXhvFLQkvbE62WCdNsgXEB6rPSPnvKIAU&callback=initMap&v=weekly">
+</script>
+</body>
+</html>

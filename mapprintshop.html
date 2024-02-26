@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Abram</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <style>
+        #map {
+            position: absolute;
+            width: 700px;
+            height: 600px;
+            left: 25%;
+            top: 5%;
+        }
+
+        #details-box {
+            position: absolute;
+            top: 20%;
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            display: none;
+        }
+
+        #shop-image {
+          position: absolute;
+          width: 80%;
+          height: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+   
+    <div id="details-box">
+      <h1 id="name">fasf</h1>
+      <h3>Address: </h3> <span id="address">fasf</span>
+      <h3>Time: </h3> <span id="time">fasf</span>
+      <h3>Price range: </h3> <span id="price-range">fasf</span>
+      <img src="sample.png" id="shop-image">
+  </div>
+
+  
+<script>
+    var map;
+    var InfoObj = [];
+    var centerCords = {
+        lat: 14.699951807599065,
+        lng: 121.03430951813161,
+    };
+
+    const icons = {
+        printshop: {             // type
+        icon: "Website/icon-printshop.png"    // icon sa mapa
+        }
+    };
+
+     
+    var markersOnMap = [
+        // Basta violet yung bracket kung magdadagdag
+        {
+            printshopName: 'Gabriel computer shop',                                  
+            printshopAddress: '7 Sinforosa, Novaliches, Quezon City, Metro Manila', 
+            printshopTime: '7am - 10pm, whole week',
+            printshopPrice: 'Piso net, piso wifi, id picture, gcash in/out, Black and white 2 pesos, Coloured long 25 pesos, Laminate id type, Whole page laminate 65  ',                            
+            printshopImage: 'Website/img-printshop1.jpg',
+            LatLng: [{
+                lat: 14.699519756166133, 
+                lng: 121.03371106435715
+            }],
+            type: 'printshop' 
+        },
+        {
+            printshopName: 'Celebrity Print',
+            printshopAddress: 'Nova Square, Novaliches, Quezon City, 1123 Metro Manila',
+            printshopTime: '7:00 AM - 10:00 PM',
+            printshopPrice: 'Print text – 5 pesos, Picture – 8 colored, Picture b&w – 5, Laminate – 25 id, Bond paper laminate – 65, School supplies (index card and folder), Tarpaulin - 150 min',
+            printshopImage: 'img-printshop2.jpg',
+            LatLng: [{
+                lat: 14.70166235230276, 
+                lng: 121.03506725129942 
+            }],
+            type: 'printshop'
+        },
+        {
+            printshopName: 'Printing shop',
+            printshopAddress: '11 Urbano St., Brgy. Bagbag, Novaliches, Quezon city ',
+            printshopTime: '7:00 AM - 10:00 PM',
+            printshopPrice: 'Price range: 2-10P',
+            printshopImage: 'img-printshop3.jpg',
+            LatLng: [{
+                lat: 14.699040575587432, 
+                lng: 121.03262685374158
+            }],
+            type: 'printshop'
+        },
+        {
+            printshopName: 'JD Printing Shop',
+            printshopAddress: '667, Quirino Highway, Novaliches, Quezon City',
+            printshopTime: '7:00 am - 6:00 pm',
+            printshopPrice: '2 pesos ( text) black and white, 5 (colored) short, 10 (colored long), ',
+            printshopImage: 'img-printshop4.jpg',
+            LatLng: [{
+                lat: 14.699080361306, 
+                lng: 121.03384571904941
+            }],
+            type: 'printshop'
+        }
+    ];
+
+    window.onload = function() {
+        initMap();
+    };
+
+    function addMarkerInfo() {
+        for (let i = 0; i < markersOnMap.length; i++) {
+            const printshop = markersOnMap[i];    //yung printshop
+
+            const marker = new google.maps.Marker({
+                position: printshop.LatLng[0],        //yung printshop
+                icon: icons[printshop.type].icon,     //yung printshop
+                map: map
+            });
+
+            // Create a closure to maintain the correct value of 'i'
+            marker.addListener("click", (function(printshop) { //ito
+                return function() {
+                    document.getElementById('name').textContent = printshop.printshopName;
+                    document.getElementById('address').textContent = printshop.printshopAddress;
+                    document.getElementById('time').textContent = printshop.printshopTime;
+                    document.getElementById('price-range').textContent = printshop.printshopPrice;
+                    document.getElementById('shop-image').src = printshop.printshopImage; // Set the image src
+                    document.getElementById('details-box').style.display = "block";
+                };
+            })(printshop));   //ito
+        }
+    }
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 18,
+            center: centerCords
+        });
+        addMarkerInfo();
+    };
+
+</script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXhvFLQkvbE62WCdNsgXEB6rPSPnvKIAU&callback=initMap&v=weekly">
+</script>
+</body>
+</html>
