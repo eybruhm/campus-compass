@@ -7,15 +7,98 @@
     <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
-    <title>School Supplies Map</title>
+    <title>Sample Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        #map {
+            position: absolute;
+            width: 700px;
+            height: 600px;
+            left: 25%;
+            top: 5%;
+        }
+
+        /*  DETAILS BOX. Kapag pinindot ang icon/pin sa map, ito lalabas*/
+        /* Main Container. Ito yung buong box na lumalabas kapag pinindot mo yung icon sa maps. */
+        #detail-box {
+            position: absolute;
+            /*border: 1px solid black;*/
+            width: 65%;
+            height: 75%;
+            margin: 5%;
+            background-color: rgb(170, 148, 148, 0.8);
+            display: none;
+        }
+
+        /* Container ng Image. Kung saan ilalagay ang image at ito yung magcrop sa image*/
+        /* Nasa kaliwa ng Main container*/
+        #detail-box-img {
+            position: absolute;
+            border: 1px solid yellow;
+            width: 60%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Attributes ng Image ng tindahan. */
+        #store-img {
+            position: absolute;
+            height: 100%;
+            width: auto;
+            left: -60%;
+            opacity: 0.8;
+        }
+
+        /* Container ng texts. Dito nakapaloob ang x-button, name, at sub-contaainer na may address, time, price, at feature */
+        /* Nasa kanan ng Main Container */
+        .detail-text-box {
+            position: absolute;
+            /*border: 1px solid blue;*/
+            width: 39.5%;
+            height: 90%;
+            right: 0;
+        }
+
+
+        #x-button {
+            position: absolute;
+            right: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 120%;
+            color: black;
+            font-weight: bold;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        #detail-name {
+            position: absolute;
+            margin: 10% 7%;
+            font-size: 180%;
+            font-family: 'Secular One', sans-serif;
+            color: black;
+        /* border: 1px solid black;*/
+        }
+
+        /* Sub-container. Dito nakapaloob ang address, time, price, at feature */
+        #detail-text-box-sub {
+            position: absolute;
+            /*border: 1px solid rgb(224, 105, 125);*/
+            width: 80%;
+            margin: 50% 15%;
+            margin-top: 50%;
+            list-style: none;
+            line-height: 90%;
+            font-weight: bold;
+            font-size: 170%;
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        /* label */
+        #detail-address, #detail-price, #detail-feature {
+            font-weight: normal;
+            font-size: 90%;
         }
     </style>
 </head>
@@ -33,8 +116,6 @@
             <div id="detail-text-box-sub">
                 <li id="label-address">Address: <span id="detail-address">Store's Address</span></li>
                 <br>
-                <li id="label-time">Store Hours: <span id="detail-time">Store's Time</span></li>
-                <br>
                 <li id="label-price">Price Range: <span id="detail-price">Store's Price</span></li>
                 <br>
                 <li id="label-feature">Shop Features: <span id="detail-feature">Store's Feature</span></li>
@@ -47,8 +128,8 @@
     var map;
     var InfoObj = [];
     var centerCords = {
-        lat: 14.701084336184477,
-        lng: 121.03493936692358,
+        lat: 14.699951807599065,
+        lng: 121.03430951813161,
     };
 
     const icons = {
@@ -56,19 +137,15 @@
         icon: "icon-schoolsupplies.png"    // icon sa mapa
         }
     };
-  
+
      
     var markersOnMap = [
         // Basta violet yung bracket kung magdadagdag
         {
             schoolsuppliesName: 'Rowena Store',                                  
             schoolsuppliesAddress: '688 San Bartolome Quirino Highwayy, Bonifacio market, Rockville subdivision. Quezon City', 
-            schoolsuppliesTime: '7:00 am - 7:00 pm',
-            schoolsuppliesPrice: 'N/A',
-            schoolsuppliesFeature: 'N/A',
+            schoolsuppliesTime: '7am - 7pm',
             schoolsuppliesImage: 'img-schoolsupplies1.jpg',
-            schoolsuppliesMarginTop: '20%',
-            schoolsuppliesLeft: '-53%',
             LatLng: [{
                 lat: 14.701079137641194, 
                 lng: 121.03539081710281
@@ -76,14 +153,10 @@
             type: 'schoolsupplies' 
         },
         {
-            schoolsuppliesName: 'School Zone – Merchandise',
+            schoolsuppliesName: 'School zone – Merchandise',
             schoolsuppliesAddress: 'PMB Building, 315 Pablo Dela Cruz, Novaliches, Quezon City, 1116 Metro Manila',
-            schoolsuppliesTime: '8:00 am - 8:00 pm Monday to Sunday',
-            schoolsuppliesPrice: 'N/A',
-            schoolsuppliesFeature: 'N/A',
+            schoolsuppliesTime: '8am - 8pm Monday to Sunday',
             schoolsuppliesImage: 'img-schoolsupplies2.jpg',
-            schoolsuppliesMarginTop: '30%',
-            schoolsuppliesLeft: '-50%',
             LatLng: [{
                 lat: 14.70162053446445, 
                 lng: 121.0348805024805
@@ -111,12 +184,9 @@
                 return function() {
                     document.getElementById('detail-name').textContent = schoolsupplies.schoolsuppliesName;
                     document.getElementById('detail-address').textContent = schoolsupplies.schoolsuppliesAddress;
-                    document.getElementById('detail-time').textContent = schoolsupplies.schoolsuppliesTime;
-                    document.getElementById('detail-price').textContent = schoolsupplies.schoolsuppliesPrice;
-                    document.getElementById('detail-feature').textContent = schoolsupplies.schoolsuppliesFeature;
+                    document.getElementById('detail-price').textContent = schoolsupplies.schoolsuppliesTime;
+                    document.getElementById('detail-feature').textContent = schoolsupplies.schoolsuppliesTime;
                     document.getElementById('store-img').src = schoolsupplies.schoolsuppliesImage; // Set the image src
-                    document.getElementById('store-img').style.left = schoolsupplies.schoolsuppliesLeft;
-                    document.getElementById('detail-text-box-sub').style.marginTop = schoolsupplies.schoolsuppliesMarginTop;
                     document.getElementById('detail-box').style.display = "block";
                 };
             })(schoolsupplies));   //ito

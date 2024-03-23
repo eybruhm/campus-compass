@@ -11,11 +11,6 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
         #map {
             position: absolute;
             width: 700px;
@@ -28,21 +23,20 @@
         /* Main Container. Ito yung buong box na lumalabas kapag pinindot mo yung icon sa maps. */
         #detail-box {
             position: absolute;
-            border-radius: 2%;
+            /*border: 1px solid black;*/
             width: 65%;
             height: 75%;
-            top: 10%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: block;
-            overflow: hidden;
-            box-shadow: 5px 5px 40px 10px rgba(0, 0, 0, 0.5);
+            margin: 5%;
+            background-color: rgb(170, 148, 148, 0.8);
+            display: none;
         }
 
         /* Container ng Image. Kung saan ilalagay ang image at ito yung magcrop sa image*/
         /* Nasa kaliwa ng Main container*/
         #detail-box-img {
             position: absolute;
-            width: 45%;
+            border: 1px solid yellow;
+            width: 60%;
             height: 100%;
             overflow: hidden;
         }
@@ -60,14 +54,16 @@
         /* Nasa kanan ng Main Container */
         .detail-text-box {
             position: absolute;
-            width: 55%;
-            height: 100%;
-            right: 0%;
+            /*border: 1px solid blue;*/
+            width: 39.5%;
+            height: 90%;
+            right: 0;
         }
+
+
         #x-button {
             position: absolute;
-            right: 1%;
-            top: 1%;
+            right: 0;
             font-family: 'Montserrat', sans-serif;
             font-size: 120%;
             color: black;
@@ -76,14 +72,10 @@
             border: none;
             cursor: pointer;
         }
-        #x-button:hover {
-            color: yellow;
-        }
-
         #detail-name {
             position: absolute;
-            margin: 5% 7%;
-            font-size: 240%;
+            margin: 10% 7%;
+            font-size: 180%;
             font-family: 'Secular One', sans-serif;
             color: black;
         /* border: 1px solid black;*/
@@ -95,7 +87,7 @@
             /*border: 1px solid rgb(224, 105, 125);*/
             width: 80%;
             margin: 50% 15%;
-            margin-top: 20%;
+            margin-top: 50%;
             list-style: none;
             line-height: 90%;
             font-weight: bold;
@@ -104,7 +96,7 @@
         }
 
         /* label */
-        #detail-address, #detail-time, #detail-price, #detail-feature {
+        #detail-address, #detail-price, #detail-feature {
             font-weight: normal;
             font-size: 90%;
         }
@@ -124,8 +116,6 @@
             <div id="detail-text-box-sub">
                 <li id="label-address">Address: <span id="detail-address">Store's Address</span></li>
                 <br>
-                <li id="label-time">Store Hours: <span id="detail-time">Store's Time</span></li>
-                <br>
                 <li id="label-price">Price Range: <span id="detail-price">Store's Price</span></li>
                 <br>
                 <li id="label-feature">Shop Features: <span id="detail-feature">Store's Feature</span></li>
@@ -138,8 +128,8 @@
     var map;
     var InfoObj = [];
     var centerCords = {
-        lat: 14.701084336184477,
-        lng: 121.03493936692358,
+        lat: 14.699951807599065,
+        lng: 121.03430951813161,
     };
 
     const icons = {
@@ -147,7 +137,7 @@
         icon: "icon-schoolsupplies.png"    // icon sa mapa
         }
     };
-  
+
      
     var markersOnMap = [
         // Basta violet yung bracket kung magdadagdag
@@ -155,8 +145,6 @@
             schoolsuppliesName: 'Rowena Store',                                  
             schoolsuppliesAddress: '688 San Bartolome Quirino Highwayy, Bonifacio market, Rockville subdivision. Quezon City', 
             schoolsuppliesTime: '7am - 7pm',
-            schoolsuppliesPrice: 'N/A',
-            schoolsuppliesFeature: 'N/A',
             schoolsuppliesImage: 'img-schoolsupplies1.jpg',
             LatLng: [{
                 lat: 14.701079137641194, 
@@ -168,8 +156,6 @@
             schoolsuppliesName: 'School zone – Merchandise',
             schoolsuppliesAddress: 'PMB Building, 315 Pablo Dela Cruz, Novaliches, Quezon City, 1116 Metro Manila',
             schoolsuppliesTime: '8am - 8pm Monday to Sunday',
-            schoolsuppliesPrice: 'N/A',
-            schoolsuppliesFeature: 'N/A',
             schoolsuppliesImage: 'img-schoolsupplies2.jpg',
             LatLng: [{
                 lat: 14.70162053446445, 
@@ -198,9 +184,8 @@
                 return function() {
                     document.getElementById('detail-name').textContent = schoolsupplies.schoolsuppliesName;
                     document.getElementById('detail-address').textContent = schoolsupplies.schoolsuppliesAddress;
-                    document.getElementById('detail-time').textContent = schoolsupplies.schoolsuppliesTime;
-                    document.getElementById('detail-price').textContent = schoolsupplies.schoolsuppliesPrice;
-                    document.getElementById('detail-feature').textContent = schoolsupplies.schoolsuppliesFeature;
+                    document.getElementById('detail-price').textContent = schoolsupplies.schoolsuppliesTime;
+                    document.getElementById('detail-feature').textContent = schoolsupplies.schoolsuppliesTime;
                     document.getElementById('store-img').src = schoolsupplies.schoolsuppliesImage; // Set the image src
                     document.getElementById('detail-box').style.display = "block";
                 };
