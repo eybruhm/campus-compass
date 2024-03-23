@@ -3,44 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice Abram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+    <title>Canteens Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-  <style>
-        #map {
-            position: absolute;
-            width: 700px;
-            height: 600px;
-            left: 25%;
-            top: 5%;
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        #details-box {
-            position: absolute;
-            top: 20%;
-            width: 300px;
-            height: 300px;
-            border: 1px solid black;
-            display: none; 
-        } 
-        #shop-image {
-        /*  position: absolute; */ /* pre kinomment ko muna to para nasa ibaba yung image ikaw na lang bahala mag style o kaya ako if gusto mo*/
-          width: 80%;
-          height: 80%;
-        }
-    </style> 
+    </style>
 </head>
-<body>
+<body id="body-map">
     <div id="map"></div>
 
    
-    <div id="details-box">
-        <h1 id="name">fasf</h1>
-        <h3>Address: </h3> <span id="address">fasf</span>
-        <h3>Time: </h3> <span id="time">fasf</span>
-        <h3>Price range: </h3> <span id="price-range">fasf</span>
-        <h3>Best feature: </h3> <span id="best-seller">fasf</span>
-        <img src="sample.png" id="shop-image">
+    <div id="detail-box"> 
+        <div id="detail-box-img">
+            <img src="https://png.pngtree.com/thumb_back/fh260/background/20230424/pngtree-traditional-japanese-shop-in-the-middle-of-the-street-image_2511202.jpg" id="store-img">
+        </div>
+        <div class="detail-text-box">
+            <button id="x-button">X</button>
+            <span id="detail-name">Store's Name</span>
+            <div id="detail-text-box-sub">
+                <li id="label-address">Address: <span id="detail-address">Store's Address</span></li>
+                <br>
+                <li id="label-time">Store Hours: <span id="detail-time">Store's Time</span></li>
+                <br>
+                <li id="label-price">Price Range: <span id="detail-price">Store's Price</span></li>
+                <br>
+                <li id="label-feature">Shop Features: <span id="detail-feature">Store's Feature</span></li>
+            </div>
+        </div>
     </div>
 
   
@@ -48,9 +47,10 @@
     var map;
     var InfoObj = [];
     var centerCords = {
-        lat: 14.699951807599065,
-        lng: 121.03430951813161,
+        lat: 14.69995046678531,
+        lng: 121.03462807110095,
     };
+    
 
     const icons = {
         canteen: {             // type
@@ -63,11 +63,13 @@
         // Basta violet yung bracket kung magdadagdag
         {
             canteenName: "PATTI'S KITCHEN",                                  
-            canteenAddress: '0003 (A), Emerald St. Rockville Subd, San Bartolome, QC - San Bartolome Metro Manila', 
-            canteenTime: '24/7',
+            canteenAddress: '0003 (A), Emerald St. Rockville Subd, San Bartolome, Quezon City', 
+            canteenTime: 'Open 24/7',
             canteenPrice: 'P70 - P200',                                  
-            canteenBestSeller: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,',
+            canteenBestSeller: 'Pork kaldereta, Tapsilog, Beef Mami',
             canteenImage: 'img-canteen1.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '-10%',
             LatLng: [{
                 lat: 14.701143, 
                 lng: 121.035597
@@ -78,9 +80,11 @@
             canteenName: 'SNACK CORNER',
             canteenAddress: 'P200 +8G7 Quezon City, Metro Manila Near 14 Rockville Ave, Quezon City',
             canteenTime: '11:00 AM - 9:00 PM',
-            canteenPrice: 'lorem ipsum',
-            canteenBestSeller: 'lorem ipsum',
+            canteenPrice: 'Student-friendly',
+            canteenBestSeller: 'French fries, Shawarma, Shawarma rice',
             canteenImage: 'img-canteen2.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '0%',
             LatLng: [{
                 lat: 14.700709784282667, 
                 lng: 121.03627384819492
@@ -91,9 +95,11 @@
             canteenName: "GRACIA'S",
             canteenAddress: 'Emerald St. Rockville Subdivision, Novaliches, Quezon City',
             canteenTime: '9:00 AM - 9:00 PM',
-            canteenPrice: 'lorem ipsum',
-            canteenBestSeller: 'lorem ipsum',
+            canteenPrice: 'Student-friendly',
+            canteenBestSeller: 'Sizzling pork sisig, Sizzling hungarian, Iced coffee',
             canteenImage: 'img-canteen3.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '-65%',
             LatLng: [{
                 lat: 14.700489,
                 lng: 121.035403
@@ -104,9 +110,11 @@
             canteenName: "LUTONG BAHAY NI NANAY",
             canteenAddress: '5 Emerald St., Rockville Subdivision, Novaliches, Quezon City, 1116 Metro Manila',
             canteenTime: '7:30 AM - 2:00 PM',
-            canteenPrice: 'lorem ipsum',
-            canteenBestSeller: 'Chicken Adobo and Diniguan',
+            canteenPrice: 'P60 - P80',
+            canteenBestSeller: 'Tapsilog and Chicken adobo',
             canteenImage: 'img-canteen4.jpg',
+            canteenMarginTop: '30%',
+            canteenImageLeft: '-40%',
             LatLng: [{
                 lat: 14.700747,
                 lng: 121.035646
@@ -115,11 +123,13 @@
         },
         {
             canteenName: "MAY ANN STORE",
-            canteenAddress: '665 Corner Urbano Quirino Highway, Bagbag Novaliches Quezon City',
+            canteenAddress: '665 Corner Urbano Quirino Highway, Bagbag Novaliches, Quezon City',
             canteenTime: '2:00 AM - 9:00 PM',
             canteenPrice: '75 pesos carne and rice/ Xerox 2',
             canteenBestSeller: 'Karinderya, Sari-Sari, and Xerox in one place',
             canteenImage: 'img-canteen5.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '-33%',
             LatLng: [{
                 lat: 14.699145,
                 lng: 121.033658
@@ -130,9 +140,11 @@
             canteenName: "S&M CANTEEN",
             canteenAddress: '#5 Urbano St. Corner Sinforosa Extension, Brgy. Bagbag, Novaliches, Quezon City',
             canteenTime: '5:00 AM - 8:00 PM',
-            canteenPrice: 'lorem ipsum',
-            canteenBestSeller: 'lorem ipsum',
+            canteenPrice: 'Student-friendly',
+            canteenBestSeller: 'Still updating...',
             canteenImage: 'img-canteen6.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '-35%',
             LatLng: [{
                 lat: 14.699035653854962,
                 lng: 121.03289483331702
@@ -142,10 +154,12 @@
          {
             canteenName: "TapSi Nova",
             canteenAddress: '665 Urbano St., Corner Quirino Highway, Brgy. Bagbag, Novaliches, Quezon City',
-            canteenTime: '10:00 AM - 5:30 PM/ Contact No. 09178387877',
-            canteenPrice: '55 Combo meal 2 ulam',
-            canteenBestSeller: 'lorem ipsum',
+            canteenTime: '10:00 AM - 5:30 PM',
+            canteenPrice: 'P60 - P75',
+            canteenBestSeller: 'Lumpia silog, Shanghai silog, Lechon kawali+rice',
             canteenImage: 'img-canteen7.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '0%',
             LatLng: [{
                 lat: 14.699103,
                 lng: 121.033844
@@ -155,10 +169,12 @@
         {
             canteenName: "PAP'S GOTO PARES",
             canteenAddress: '661 Urbano St., Brgy. Bagbag, Novaliches, Quezon City',
-            canteenTime: '24hrs',
-            canteenPrice: '15-129',
+            canteenTime: 'Open 24/7',
+            canteenPrice: 'P15 - P129',
             canteenBestSeller: 'Tapsilog and Pares',
             canteenImage: 'img-canteen8.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '-35%',
             LatLng: [{
                 lat: 14.698988794005903,
                 lng: 121.03375810959831
@@ -168,10 +184,12 @@
         {
             canteenName: "Kalye Susano Food Hub",
             canteenAddress: '662 Quirino Highway, Brgy. Bagbag, Novaliches, Quezon City',
-            canteenTime: '24hrs',
-            canteenPrice: '50 pesos - 450 pesos',
+            canteenTime: 'Open 24/7',
+            canteenPrice: 'P50 - P450',
             canteenBestSeller: 'Sizzling Foods',
             canteenImage: 'img-canteen9.jpg',
+            canteenMarginTop: '30%',
+            canteenImageLeft: '0%',
             LatLng: [{
                 lat: 14.698795509164919,
                 lng: 121.03407326913661
@@ -181,10 +199,12 @@
         {
             canteenName: "Buddah",
             canteenAddress: 'St. Sinforosa #1 Quirino Highway, Brgy. Bagbag, Novaliches, Quezon City',
-            canteenTime: '24hrs',
-            canteenPrice: '20 - Kikiam, Kwek-kwek, Lugaw, Hotdog, Lumpia. 55 - Mami-rice',
-            canteenBestSeller: 'lorem ipsum',
+            canteenTime: 'Open 24/7',
+            canteenPrice: 'P20 - P55',
+            canteenBestSeller: 'Kikiam, Kwek-kwek, Mami-rice',
             canteenImage: 'img-canteen10.jpg',
+            canteenMarginTop: '20%',
+            canteenImageLeft: '-30%',
             LatLng: [{
                 lat: 14.699474,
                 lng: 121.034048
@@ -195,9 +215,11 @@
             canteenName: "MALIA & MOMMY B'DANG EATERY",
             canteenAddress: '#3 Sinforosa St., Brgy. Bagbag, Novaliches, Quezon City',
             canteenTime: '6:00 AM - 8:00 PM',
-            canteenPrice: 'lorem ipsum',
+            canteenPrice: 'Student-friendly',
             canteenBestSeller: 'Sisig, Chicken, anything fried',
             canteenImage: 'img-canteen11.jpg',
+            canteenMarginTop: '30%',
+            canteenImageLeft: '-30%',
             LatLng: [{
                 lat: 14.699477,
                 lng: 121.033791
@@ -223,13 +245,17 @@
             // Create a closure to maintain the correct value of 'i'
             marker.addListener("click", (function(canteen) { //ito
                 return function() {
-                    document.getElementById('name').textContent = canteen.canteenName;
-                    document.getElementById('address').textContent = canteen.canteenAddress;
-                    document.getElementById('time').textContent = canteen.canteenTime;
-                    document.getElementById('price-range').textContent = canteen.canteenPrice;
-                    document.getElementById('best-seller').textContent = canteen.canteenBestSeller;
-                    document.getElementById('shop-image').src = canteen.canteenImage; // Set the image src
-                    document.getElementById('details-box').style.display = "block";
+
+                    document.getElementById('detail-name').textContent = canteen.canteenName;
+                    document.getElementById('detail-address').textContent = canteen.canteenAddress;
+                    document.getElementById('detail-time').textContent = canteen.canteenTime;
+                    document.getElementById('detail-price').textContent = canteen.canteenPrice;
+                    document.getElementById('detail-feature').textContent = canteen.canteenBestSeller;
+                    document.getElementById('store-img').src = canteen.canteenImage; // Set the image src
+                    document.getElementById('detail-text-box-sub').style.marginTop = canteen.canteenMarginTop;
+                    document.getElementById('store-img').style.left = canteen.canteenImageLeft;
+                    document.getElementById('detail-box').style.display = "block";
+
                 };
             })(canteen));   //ito
         }
@@ -242,6 +268,20 @@
         });
         addMarkerInfo();
     };
+
+    // Get the close button element by its ID
+    const closeButton = document.getElementById('x-button');
+    
+    // Add click event listener to the close button
+    closeButton.addEventListener('click', function() {
+        // Find the closest parent element with ID "detail-box"
+        const detailBox = this.closest('#detail-box');
+        // Check if the detailBox exists
+        if (detailBox) {
+            // Hide the detail-box by setting its display property to "none"
+            detailBox.style.display = 'none';
+        }
+    });
 
 </script>
 
